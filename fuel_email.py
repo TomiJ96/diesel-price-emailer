@@ -295,7 +295,7 @@ def main():
     write_prices_json(results, fetch_time)
     html_body = build_html_email(results, fetch_time)
     plain_body = build_plain_text(results, fetch_time)
-    if True:
+    if fetch_time.hour == 3:
         send_email(html_body, plain_body, fetch_time)
         print("📧 Email sent (3am run)")
     else:
