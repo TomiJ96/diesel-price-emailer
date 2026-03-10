@@ -7,7 +7,7 @@ on:
     #   6:00 AM AEST → cron: '0 20 * * *'
     #   7:00 AM AEST → cron: '0 21 * * *'
     #   8:00 AM AEST → cron: '0 22 * * *'
-    - cron: '0 21 * * *'
+    - cron: '0 17 * * *'
 
   # Allows manual trigger from the GitHub Actions tab (great for testing)
   workflow_dispatch:
