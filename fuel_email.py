@@ -38,17 +38,18 @@ RECIPIENTS     = [r.strip() for r in _recipients.split(",")]
 #   5. Set FIND_STATIONS = False
 # ==============================================================================
 MONITORED_STATIONS = [
-    {"name": "Pacific Fuel Blacksoil",  "site_id": 61400001, "region_id": 1},
-    {"name": "Pacific Fuel Rocklea",    "site_id": 61400002, "region_id": 1},
-    {"name": "Pacific Fuel Yatala",     "site_id": 61400003, "region_id": 1},
-    {"name": "Pacific Fuel Hemmant",    "site_id": 61400004, "region_id": 1},
-    {"name": "United Archerfield",      "site_id": 61400005, "region_id": 1},
-    {"name": "United Brendale",         "site_id": 61400006, "region_id": 1},
-    {"name": "United Meadowbrook",      "site_id": 61400007, "region_id": 1},
+    {"name": "Pacific Fuel Blacksoil",  "site_id": 61402913, "region_id": 1},
+    {"name": "Pacific Fuel Rocklea",    "site_id": 61401427, "region_id": 1},
+    {"name": "Pacific Fuel Yatala",     "site_id": 61477080, "region_id": 1},
+    {"name": "Pacific Fuel Hemmant",    "site_id": 61478256, "region_id": 1},
+    {"name": "United Archerfield",      "site_id": 61477778, "region_id": 1},
+    {"name": "United Brendale",         "site_id": 61477709, "region_id": 1},
+    {"name": "United Loganlea",         "site_id": 61401773, "region_id": 1},
+    {"name": "United Park Ridge",       "site_id": 61402439, "region_id": 1},
 ]
 
 DIESEL_FUEL_ID   = 2
-FIND_STATIONS    = True   # set True temporarily to discover real Site IDs
+FIND_STATIONS    = False   # set True temporarily to discover real Site IDs
 M365_SMTP_SERVER = "smtp.office365.com"
 M365_SMTP_PORT   = 587
 API_BASE         = "https://fppdirectapi-prod.fuelpricesqld.com.au"
