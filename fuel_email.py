@@ -272,7 +272,10 @@ def main():
         discover_stations()
         return
 
-    fetch_time = datetime.now()
+    from datetime import timezone, timedelta
+    aest = timezone(timedelta(hours=10))
+    fetch_time = datetime.now(tz=aest)
+
     print(f"📡 Fetching diesel prices — {fetch_time.strftime('%d %b %Y %H:%M')}")
 
     results    = build_results()
