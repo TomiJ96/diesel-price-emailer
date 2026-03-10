@@ -269,7 +269,7 @@ def discover_stations():
 
 def main():
     if FIND_STATIONS:
-        discover_stations()
+        discover_stations(GetFuelTypes)
         return
 
     from datetime import timezone, timedelta
@@ -282,7 +282,11 @@ def main():
     write_prices_json(results, fetch_time)
     html_body  = build_html_email(results, fetch_time)
     plain_body = build_plain_text(results, fetch_time)
-    send_email(html_body, plain_body, fetch_time)
+   if fetch_time.hour == 3:
+        send_email(build_html_email(results, fetch_time), build_plain_text(results, fetch_time), fetch_time)
+        print("📧 Email sent (3am run)")
+    else:
+        print("⏭ Prices updated — no email (non-morning run)")
 
 
 if __name__ == "__main__":
