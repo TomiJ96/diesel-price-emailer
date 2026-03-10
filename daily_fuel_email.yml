@@ -2,14 +2,13 @@ name: Daily Diesel Price Email
 
 on:
   schedule:
-    # 7:00 AM Brisbane time (AEST = UTC+10, so 21:00 UTC the night before)
-    # Adjust send time here (all times UTC):
-    #   6:00 AM AEST → cron: '0 20 * * *'
-    #   7:00 AM AEST → cron: '0 21 * * *'
-    #   8:00 AM AEST → cron: '0 22 * * *'
-    - cron: '0 17 * * *'
+    - cron: '0 17 * * *'   # 3:00 AM AEST  ← email run
+    - cron: '0 20 * * *'   # 6:00 AM AEST
+    - cron: '0 0 * * *'    # 10:00 AM AEST
+    - cron: '0 4 * * *'    # 2:00 PM AEST
+    - cron: '0 8 * * *'    # 6:00 PM AEST
+    - cron: '0 12 * * *'   # 10:00 PM AEST
 
-  # Allows manual trigger from the GitHub Actions tab (great for testing)
   workflow_dispatch:
 
 jobs:
