@@ -598,9 +598,12 @@
         <div class="bar-fill" style="width:${barPct}%; background:${barColor}"></div>
       </div>
       ${badge}
-      <div class="station-price" style="color:${priceColor}">
-        ${s.price != null ? s.price.toFixed(1) : '—'}<span class="price-unit">c/L</span>
-      </div>
+      <div style="text-align:right; flex-shrink:0;">
+        <div class="station-price" style="color:${priceColor}">
+          ${s.price != null ? s.price.toFixed(1) : '—'}<span class="price-unit">c/L</span>
+        </div>
+        ${s.fuel_type ? `<div style="font-size:10px; color:var(--muted); margin-top:1px;">${s.fuel_type}</div>` : ''}
+    </div>
     </div>`;
   }
 
