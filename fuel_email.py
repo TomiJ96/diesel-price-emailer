@@ -48,7 +48,12 @@ MONITORED_STATIONS = [
     {"name": "United Park Ridge",       "site_id": 61402439, "region_id": 1},
 ]
 
-DIESEL_FUEL_ID   = 3
+DIESEL_FUEL_IDS = {
+    3:    "Diesel",
+    6:    "ULSD",
+    14:   "Premium Diesel",
+    1000: "Diesel/Premium",
+}
 FIND_STATIONS    = False   # set True temporarily to discover real Site IDs
 M365_SMTP_SERVER = "smtp.office365.com"
 M365_SMTP_PORT   = 587
@@ -92,9 +97,13 @@ def get_all_sites(region_id=1):
 
 
 def find_diesel_price(prices, site_id):
-    for entry in prices:
-        if entry.get("SiteId") == site_id and entry.get("FuelId") == DIESEL_FUEL_ID:
-            return round(entry["Price"] / 10.0, 1)
+    for fuel_id in DIESEL_FUEL_IDS:
+        for entry in prices:
+            if entry.get("SiteId") == site_id and entry.get("FuelId") == fuel_id:
+                return {
+                    "price": round(entry["Price"] / 10.0, 1),
+                    "fuel_type": DIESEL_FUEL_IDS[fuel_id]
+                }
     return None
 
 
@@ -103,17 +112,20 @@ def build_results():
     if USE_MOCK_DATA:
         print("ℹ️  Running in MOCK DATA mode — prices are simulated.")
         return [
-            {"name": s["name"], "price": MOCK_PRICES.get(s["site_id"])}
+            {"name": s["name"], "price": MOCK_PRICES.get(s["site_id"]), "fuel_type": "Diesel"}
             for s in MONITORED_STATIONS
         ]
+
 
     region_ids = set(s["region_id"] for s in MONITORED_STATIONS)
     all_prices = {rid: get_prices(rid) for rid in region_ids}
     results = []
     for station in MONITORED_STATIONS:
         price = find_diesel_price(all_prices[station["region_id"]], station["site_id"])
-        results.append({"name": station["name"], "price": price})
-        print(f"  {station['name']}: {f'{price:.1f}c/L' if price else 'not found'}")
+        p = price["price"] if price else None
+        t = price["fuel_type"] if price else None
+        results.append({"name": station["name"], "price": p, "fuel_type": t})
+        print(f"  {station['name']}: {f'{p:.1f}c/L ({t})' if p else 'not found'}")
     return results
 
 
@@ -137,7 +149,8 @@ def build_html_email(results, fetch_time):
     for r in sorted(results, key=lambda x: (x["price"] is None, x["price"])):
         price = r["price"]
         if price is not None:
-            price_str = f"{price:.1f}c/L"
+            fuel_type = r.get("fuel_type") or ""
+            price_str = f"{price:.1f}c/L <span style='font-size:10px; color:#999;'>({fuel_type})</span>"
             if price == min_p:
                 colour, weight, badge = "#28a745", "font-weight:bold;", " ✅"
             elif price == max_p:
