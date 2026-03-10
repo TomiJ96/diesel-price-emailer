@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Skiptrans Queensland — Local Diesel Prices</title>
+<title>Skip Trans — Diesel Prices</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -228,12 +228,53 @@
   }
 
   .stat-sub {
-    font-size: 13px;
+    font-size: 11px;
     color: var(--muted);
     margin-top: 4px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  /* ── Sort toggle ── */
+  .sort-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .sort-label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+    margin-right: 4px;
+  }
+
+  .sort-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--muted);
+    font-family: 'Barlow', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .sort-btn:hover {
+    border-color: rgba(255,255,255,0.2);
+    color: var(--text);
+  }
+
+  .sort-btn.active {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: #fff;
   }
 
   /* ── Station cards ── */
@@ -468,13 +509,11 @@
     <div class="brand">
       <div class="fuel-icon">⛽</div>
       <div class="brand-text">
-        <h1>SKIPTRANS QUEENSLAND</h1>
+        <h1>SKIP TRANS</h1>
         <p>Daily Diesel Prices — Brisbane</p>
       </div>
     </div>
 
-    <div style="display:flex; align-items:center; gap:12px;">
-     
     <div class="refresh-ring-wrap">
       <div class="ring-container" onclick="manualRefresh()" title="Click to refresh now">
         <svg viewBox="0 0 48 48">
@@ -484,7 +523,6 @@
         <div class="ring-inner" id="ringCountdown">—</div>
       </div>
       <div class="refresh-label">next<br>refresh</div>
-    </div>
     </div>
   </header>
 
@@ -508,76 +546,121 @@
 </div>
 
 <script>
-  const REFRESH_INTERVAL_MS = 15 * 60 * 1000; // 15 minutes
-  const CIRCUMFERENCE = 2 * Math.PI * 20;     // r=20
+  const REFRESH_INTERVAL_MS = 15 * 60 * 1000;
+  const CIRCUMFERENCE = 2 * Math.PI * 20;
 
-  let refreshTimer;
   let countdownInterval;
   let nextRefreshAt;
+  let currentSort = 'supplier'; // 'supplier' | 'price'
+  let cachedData  = null;
 
-  // ── Fetch prices.json from the same directory ──
+  // ── Fetch prices.json ──
   async function fetchPrices() {
-    // Cache-bust so the browser doesn't serve a stale file
-    const url = `prices.json?t=${Date.now()}`;
-    const resp = await fetch(url);
+    const resp = await fetch(`prices.json?t=${Date.now()}`);
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     return resp.json();
   }
 
-  // ── Render the dashboard ──
-  function render(data) {
-    const stations = [...data.stations].sort((a, b) => (a.price ?? 999) - (b.price ?? 999));
-    const prices   = stations.map(s => s.price).filter(Boolean);
-    const minP     = Math.min(...prices);
-    const maxP     = Math.max(...prices);
-    const avgP     = prices.length ? (prices.reduce((a,b) => a+b, 0) / prices.length) : null;
+  // ── Set sort mode and re-render cached data ──
+  function setSort(mode) {
+    currentSort = mode;
+    document.querySelectorAll('.sort-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.sort === mode);
+    });
+    if (cachedData) renderStations(cachedData);
+  }
 
-    const cheapestStation  = stations.find(s => s.price === minP);
-    const expensiveStation = stations.find(s => s.price === maxP);
+  // ── Build a single station row ──
+  function stationHTML(s, rank, minP, maxP, prices) {
+    const isCheapest = s.price === minP;
+    const isPriciest = s.price === maxP;
+    const barPct     = prices.length > 1
+      ? Math.round(((s.price - minP) / (maxP - minP)) * 100)
+      : 50;
+    const barColor   = isCheapest ? 'var(--accent)' : isPriciest ? 'var(--danger)' : 'var(--blue)';
+    const priceColor = isCheapest ? 'var(--accent)' : isPriciest ? 'var(--danger)' : 'var(--text)';
+    const badge      = isCheapest
+      ? '<span class="badge badge-best">Cheapest</span>'
+      : isPriciest
+      ? '<span class="badge badge-worst">Highest</span>'
+      : '';
+    const cls = isCheapest ? ' cheapest' : isPriciest ? ' priciest' : '';
+    const brand = s.name.startsWith('Pacific') ? 'Pacific Fuel' : 'United Petroleum';
 
-    // Mock banner
-    document.getElementById('mockBanner').classList.toggle('hidden', !data.is_mock);
+    return `
+    <div class="station-row${cls}">
+      <div class="rank">${rank}</div>
+      <div class="station-info">
+        <div class="station-name">${s.name}</div>
+        <div class="station-brand">${brand}</div>
+      </div>
+      <div class="bar-wrap">
+        <div class="bar-fill" style="width:${barPct}%; background:${barColor}"></div>
+      </div>
+      ${badge}
+      <div class="station-price" style="color:${priceColor}">
+        ${s.price != null ? s.price.toFixed(1) : '—'}<span class="price-unit">c/L</span>
+      </div>
+    </div>`;
+  }
 
-    // Group by brand
-    const pacific = stations.filter(s => s.name.startsWith('Pacific'));
-    const united  = stations.filter(s => s.name.startsWith('United'));
+  // ── Render just the station list (called on sort change too) ──
+  function renderStations(data) {
+    const sorted = [...data.stations].sort((a, b) => (a.price ?? 999) - (b.price ?? 999));
+    const prices = sorted.map(s => s.price).filter(Boolean);
+    const minP   = Math.min(...prices);
+    const maxP   = Math.max(...prices);
 
-    function stationHTML(s, rank) {
-      const isCheapest = s.price === minP;
-      const isPriciest = s.price === maxP;
-      const barPct     = prices.length > 1
-        ? Math.round(((s.price - minP) / (maxP - minP)) * 100)
-        : 50;
-      const barColor   = isCheapest ? 'var(--accent)' : isPriciest ? 'var(--danger)' : 'var(--blue)';
-      const priceColor = isCheapest ? 'var(--accent)' : isPriciest ? 'var(--danger)' : 'var(--text)';
-      const badge      = isCheapest
-        ? '<span class="badge badge-best">Cheapest</span>'
-        : isPriciest
-        ? '<span class="badge badge-worst">Highest</span>'
-        : '';
-      const cls = isCheapest ? ' cheapest' : isPriciest ? ' priciest' : '';
-      const shortName = s.name.replace('Pacific Fuel ', '').replace('United ', '');
+    let stationsHTML = '';
 
-      return `
-      <div class="station-row${cls}">
-        <div class="rank">${rank}</div>
-        <div class="station-info">
-          <div class="station-name">${s.name}</div>
-          <div class="station-brand">${s.name.startsWith('Pacific') ? 'Pacific Fuel' : 'United Petroleum'}</div>
+    if (currentSort === 'price') {
+      // Flat list, cheapest to most expensive
+      stationsHTML = `
+        <div class="station-group">
+          <div class="section-label">Cheapest to most expensive</div>
+          <div class="stations">
+            ${sorted.map((s, i) => stationHTML(s, i + 1, minP, maxP, prices)).join('')}
+          </div>
+        </div>`;
+    } else {
+      // Grouped by supplier, each group sorted cheapest first
+      const pacific = sorted.filter(s => s.name.startsWith('Pacific'));
+      const united  = sorted.filter(s => s.name.startsWith('United'));
+      let rank = 1;
+      stationsHTML = `
+        <div class="station-group">
+          <div class="section-label">Pacific Fuel</div>
+          <div class="stations">
+            ${pacific.map(s => stationHTML(s, rank++, minP, maxP, prices)).join('')}
+          </div>
         </div>
-        <div class="bar-wrap">
-          <div class="bar-fill" style="width:${barPct}%; background:${barColor}"></div>
-        </div>
-        ${badge}
-        <div class="station-price" style="color:${priceColor}">
-          ${s.price != null ? s.price.toFixed(1) : '—'}<span class="price-unit">c/L</span>
-        </div>
-      </div>`;
+        <div class="station-group">
+          <div class="section-label">United Petroleum</div>
+          <div class="stations">
+            ${united.map(s => stationHTML(s, rank++, minP, maxP, prices)).join('')}
+          </div>
+        </div>`;
     }
 
-    let rank = 1;
+    document.getElementById('stationList').innerHTML = stationsHTML;
+  }
 
-    const html = `
+  // ── Full render (summary cards + stations) ──
+  function render(data) {
+    cachedData = data;
+
+    const sorted = [...data.stations].sort((a, b) => (a.price ?? 999) - (b.price ?? 999));
+    const prices = sorted.map(s => s.price).filter(Boolean);
+    const minP   = Math.min(...prices);
+    const maxP   = Math.max(...prices);
+    const avgP   = prices.length ? (prices.reduce((a, b) => a + b, 0) / prices.length) : null;
+
+    const cheapestStation  = sorted.find(s => s.price === minP);
+    const expensiveStation = sorted.find(s => s.price === maxP);
+
+    document.getElementById('mockBanner').classList.toggle('hidden', !data.is_mock);
+
+    document.getElementById('content').innerHTML = `
       <div class="summary">
         <div class="stat-card cheapest">
           <div class="stat-label">Cheapest today</div>
@@ -592,29 +675,25 @@
         <div class="stat-card average">
           <div class="stat-label">Average across all</div>
           <div class="stat-value">${avgP ? avgP.toFixed(1) : '—'}<span class="stat-unit">c/L</span></div>
-          <div class="stat-sub">${stations.length} stations monitored</div>
+          <div class="stat-sub">${sorted.length} stations monitored</div>
         </div>
       </div>
 
-      <div class="station-group">
-        <div class="section-label">Pacific Fuel</div>
-        <div class="stations">
-          ${pacific.map(s => stationHTML(s, rank++)).join('')}
-        </div>
+      <div class="sort-bar">
+        <span class="sort-label">Sort by</span>
+        <button class="sort-btn ${currentSort === 'supplier' ? 'active' : ''}"
+          data-sort="supplier" onclick="setSort('supplier')">By Supplier</button>
+        <button class="sort-btn ${currentSort === 'price' ? 'active' : ''}"
+          data-sort="price" onclick="setSort('price')">Cheapest First</button>
       </div>
 
-      <div class="station-group">
-        <div class="section-label">United Petroleum</div>
-        <div class="stations">
-          ${united.map(s => stationHTML(s, rank++)).join('')}
-        </div>
-      </div>`;
+      <div id="stationList"></div>`;
 
-    document.getElementById('content').innerHTML = html;
     document.getElementById('lastUpdated').textContent = data.last_updated_str ?? '—';
+    renderStations(data);
   }
 
-  // ── Load data and re-render ──
+  // ── Load data ──
   async function loadData() {
     try {
       const data = await fetchPrices();
@@ -628,7 +707,7 @@
     }
   }
 
-  // ── Refresh countdown ring ──
+  // ── Countdown ring ──
   function startCountdown() {
     clearInterval(countdownInterval);
     nextRefreshAt = Date.now() + REFRESH_INTERVAL_MS;
@@ -637,22 +716,16 @@
       const remaining = Math.max(0, nextRefreshAt - Date.now());
       const mins = Math.floor(remaining / 60000);
       const secs = Math.floor((remaining % 60000) / 1000);
-
-      // Update ring
       const progress = remaining / REFRESH_INTERVAL_MS;
       const offset   = CIRCUMFERENCE * (1 - progress);
       document.getElementById('progressRing').style.strokeDashoffset = offset;
       document.getElementById('ringCountdown').textContent =
         remaining > 60000 ? `${mins}m` : `${secs}s`;
-
-      if (remaining <= 0) {
-        loadData();
-        startCountdown();
-      }
+      if (remaining <= 0) { loadData(); startCountdown(); }
     }, 1000);
   }
 
-  // ── Manual refresh button ──
+  // ── Manual refresh ──
   function manualRefresh() {
     const btn = document.getElementById('refreshBtn');
     btn.classList.add('spinning');
