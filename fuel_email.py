@@ -23,9 +23,9 @@ USE_MOCK_DATA = True
 # CREDENTIALS — loaded from GitHub Secrets (never hard-code these)
 # ==============================================================================
 FUEL_API_TOKEN = os.environ.get("FUEL_API_TOKEN", "")
-M365_EMAIL     = os.environ.get("M365_EMAIL",     "no-reply@skiptrans.net")
+M365_EMAIL     = os.environ.get("M365_EMAIL",     "")
 M365_PASSWORD  = os.environ.get("M365_PASSWORD",  "")
-_recipients    = os.environ.get("RECIPIENTS",     "office@skiptrans.net")
+_recipients    = os.environ.get("RECIPIENTS",     "")
 RECIPIENTS     = [r.strip() for r in _recipients.split(",")]
 
 # ==============================================================================
