@@ -235,13 +235,14 @@ def write_prices_json(results, fetch_time):
         "last_updated_str": fetch_time.strftime("%A, %d %B %Y at %I:%M %p"),
         "is_mock":          USE_MOCK_DATA,
         "stations": [
-            {
-                "name":      r["name"],
-                "price":     r["price"],
-                "price_str": f"{r['price']:.1f}c/L" if r["price"] else "Not reported",
-            }
-            for r in results
-        ],
+    {
+        "name":      r["name"],
+        "price":     r["price"],
+        "price_str": f"{r['price']:.1f}c/L" if r["price"] else "Not reported",
+        "fuel_type": r.get("fuel_type") or "",
+    }
+    for r in results
+],
     }
     with open("prices.json", "w") as f:
         json.dump(payload, f, indent=2)
