@@ -17,7 +17,7 @@ from datetime import datetime
 # ==============================================================================
 # TOGGLE — switch to False once your QLD Fuel API token is ready
 # ==============================================================================
-USE_MOCK_DATA = True
+USE_MOCK_DATA = Falss
 
 # ==============================================================================
 # CREDENTIALS — loaded from GitHub Secrets (never hard-code these)
@@ -48,7 +48,7 @@ MONITORED_STATIONS = [
 ]
 
 DIESEL_FUEL_ID   = 2
-FIND_STATIONS    = False   # set True temporarily to discover real Site IDs
+FIND_STATIONS    = True   # set True temporarily to discover real Site IDs
 M365_SMTP_SERVER = "smtp.office365.com"
 M365_SMTP_PORT   = 587
 API_BASE         = "https://fppdirectapi-prod.fuelpricesqld.com.au"
