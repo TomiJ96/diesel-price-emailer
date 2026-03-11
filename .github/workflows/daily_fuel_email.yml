@@ -2,8 +2,13 @@ name: Daily Diesel Price Email
 
 on:
   schedule:
-    - cron: '0 21 * * *'   # 7:00 AM AEST
-  workflow_dispatch:
+    - cron: '0 16 * * *'   # 2:00 AM AEST
+    - cron: '30 17 * * *'   # 3:00 AM AEST  ← email run
+    - cron: '0 20 * * *'   # 6:00 AM AEST
+    - cron: '0 0 * * *'    # 10:00 AM AEST
+    - cron: '0 4 * * *'    # 2:00 PM AEST
+    - cron: '0 8 * * *'    # 6:00 PM AEST
+    - cron: '0 12 * * *'   # 10:00 PM AEST
 
 jobs:
   send-fuel-email:
