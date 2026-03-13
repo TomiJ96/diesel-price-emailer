@@ -59,7 +59,7 @@ DIESEL_FUEL_IDS = {
     14:   "Premium Diesel",
     1000: "Diesel/Premium",
 }
-FIND_STATIONS    = False   # set True temporarily to discover real Site IDs
+FIND_STATIONS    = True   # set True temporarily to discover real Site IDs
 M365_SMTP_SERVER = "smtp.office365.com"
 M365_SMTP_PORT   = 587
 API_BASE         = "https://fppdirectapi-prod.fuelpricesqld.com.au"
@@ -283,16 +283,16 @@ def send_email(html_body, plain_body, fetch_time):
 
 
 def discover_stations():
-    print("🔍 Discovering Brisbane stations...\n")
-    sites  = get_all_sites(region_id=1)
+    print("🔍 Checking fuel types available...\n")
     prices = get_prices(region_id=1)
-    
-    # Show all fuel IDs reported by our monitored stations
-    target_ids = {s["site_id"] for s in MONITORED_STATIONS}
-    print("=== PRICES FOR MONITORED STATIONS ===")
+    fuel_ids = {}
     for entry in prices:
-        if entry.get("SiteId") in target_ids:
-            print(f"  SiteId={entry['SiteId']}  FuelId={entry['FuelId']}  Price={entry['Price']/10:.1f}c/L")
+        fid = entry.get("FuelId")
+        if fid not in fuel_ids:
+            fuel_ids[fid] = entry.get("Price", 0) / 10.0
+    for fid, sample_price in sorted(fuel_ids.items()):
+        print(f"  FuelId={fid}  Sample price={sample_price:.1f}c/L")
+
 
 
 def main():
