@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-03-16T04:00:23",
-  "last_updated_str": "Monday, 16 March 2026 at 04:00 AM",
+  "last_updated": "2026-03-16T08:00:22",
+  "last_updated_str": "Monday, 16 March 2026 at 08:00 AM",
   "is_mock": false,
   "stations": [
     {
@@ -35,8 +35,8 @@
     },
     {
       "name": "United Petrol - Brendale",
-      "price": 256.9,
-      "price_str": "256.9c/L",
+      "price": 261.9,
+      "price_str": "261.9c/L",
       "fuel_type": "Diesel"
     },
     {
@@ -47,8 +47,8 @@
     },
     {
       "name": "United Petrol - Park Ridge",
-      "price": 255.9,
-      "price_str": "255.9c/L",
+      "price": 261.9,
+      "price_str": "261.9c/L",
       "fuel_type": "Diesel"
     }
   ]
