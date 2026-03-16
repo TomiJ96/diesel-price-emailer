@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-03-16T16:00:22",
-  "last_updated_str": "Monday, 16 March 2026 at 04:00 PM",
+  "last_updated": "2026-03-16T20:00:28",
+  "last_updated_str": "Monday, 16 March 2026 at 08:00 PM",
   "is_mock": false,
   "stations": [
     {
@@ -29,8 +29,8 @@
     },
     {
       "name": "United Petrol - Archerfield",
-      "price": 260.9,
-      "price_str": "260.9c/L",
+      "price": 260.5,
+      "price_str": "260.5c/L",
       "fuel_type": "Diesel"
     },
     {
@@ -47,8 +47,8 @@
     },
     {
       "name": "United Petrol - Park Ridge",
-      "price": 261.9,
-      "price_str": "261.9c/L",
+      "price": 262.9,
+      "price_str": "262.9c/L",
       "fuel_type": "Diesel"
     }
   ]
