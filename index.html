@@ -598,11 +598,16 @@
       </div>
       ${badge}
       <div style="text-align:right; flex-shrink:0;">
-        <div class="station-price" style="color:${priceColor}">
-          ${s.price != null ? s.price.toFixed(1) : '—'}<span class="price-unit">c/L</span>
-        </div>
-        ${s.price != null && s.price !== minP ? `<div style="font-size:10px; color:var(--muted); margin-top:1px;">+${(s.price - minP).toFixed(1)}c/L dearer</div>` : ''}
-      </div>
+        ${s.price_bowser != null ? `
+          <div style="display:flex; align-items:center; gap:3px; justify-content:flex-end;">
+            <span style="font-size:9px; color:var(--muted); opacity:0.6;">BOWSER</span>
+            <span style="font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:600; color:var(--muted);">${s.price_bowser.toFixed(1)}c/L</span>
+          </div>` : ''}
+         <div class="station-price" style="color:${priceColor}">
+           ${s.price != null ? s.price.toFixed(1) : '—'}<span class="price-unit">c/L</span>
+         </div>
+         ${s.price != null && s.price !== minP ? `<div style="font-size:10px; color:var(--muted); margin-top:1px;">+${(s.price - minP).toFixed(1)}c/L dearer</div>` : ''}
+       </div>
     </div>`;
   }
 
