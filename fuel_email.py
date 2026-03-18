@@ -137,7 +137,7 @@ def build_results():
         t = price["fuel_type"] if price else None
         discount = SUPPLIER_DISCOUNTS["Pacific"] if station["name"].startswith("Pacific") else SUPPLIER_DISCOUNTS["United"]
         discounted = round(p - discount, 1) if p else None
-        results.append({"name": station["name"], "price": discounted, "fuel_type": t})
+        results.append({"name": station["name"], "price": discounted, "price_bowser": p, "fuel_type": t})
 
         print(f"  {station['name']}: {f'{p:.1f}c/L ({t})' if p else 'not found'}")
     return results
@@ -252,6 +252,7 @@ def write_prices_json(results, fetch_time):
         "name":      r["name"],
         "price":     r["price"],
         "price_str": f"{r['price']:.1f}c/L" if r["price"] else "Not reported",
+        "price_bowser": r.get("price_bowser"),
         "fuel_type": r.get("fuel_type") or "",
     }
     for r in results
