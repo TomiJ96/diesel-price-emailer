@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-04-03T16:00:24",
-  "last_updated_str": "Friday, 03 April 2026 at 04:00 PM",
+  "last_updated": "2026-04-03T20:00:23",
+  "last_updated_str": "Friday, 03 April 2026 at 08:00 PM",
   "is_mock": false,
   "stations": [
     {
@@ -33,9 +33,9 @@
     },
     {
       "name": "United Petrol - Archerfield",
-      "price": 301.5,
-      "price_str": "301.5c/L",
-      "price_bowser": 305.5,
+      "price": 300.9,
+      "price_str": "300.9c/L",
+      "price_bowser": 304.9,
       "fuel_type": "Diesel"
     },
     {
