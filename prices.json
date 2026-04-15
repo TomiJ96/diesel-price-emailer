@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-04-15T12:00:27",
-  "last_updated_str": "Wednesday, 15 April 2026 at 12:00 PM",
+  "last_updated": "2026-04-15T16:00:33",
+  "last_updated_str": "Wednesday, 15 April 2026 at 04:00 PM",
   "is_mock": false,
   "stations": [
     {
@@ -33,23 +33,23 @@
     },
     {
       "name": "United Petrol - Archerfield",
-      "price": 309.4,
-      "price_str": "309.4c/L",
-      "price_bowser": 313.4,
+      "price": 307.4,
+      "price_str": "307.4c/L",
+      "price_bowser": 311.4,
       "fuel_type": "Diesel"
     },
     {
       "name": "United Petrol - Brendale",
-      "price": 309.4,
-      "price_str": "309.4c/L",
-      "price_bowser": 313.4,
+      "price": 305.4,
+      "price_str": "305.4c/L",
+      "price_bowser": 309.4,
       "fuel_type": "Diesel"
     },
     {
       "name": "United Petrol - Loganlea",
-      "price": 309.4,
-      "price_str": "309.4c/L",
-      "price_bowser": 313.4,
+      "price": 305.4,
+      "price_str": "305.4c/L",
+      "price_bowser": 309.4,
       "fuel_type": "Diesel"
     },
     {
