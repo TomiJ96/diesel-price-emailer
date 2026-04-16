@@ -1,62 +1,62 @@
 {
-  "last_updated": "2026-04-16T08:00:29",
-  "last_updated_str": "Thursday, 16 April 2026 at 08:00 AM",
+  "last_updated": "2026-04-16T12:00:27",
+  "last_updated_str": "Thursday, 16 April 2026 at 12:00 PM",
   "is_mock": false,
   "stations": [
     {
       "name": "Pacific Fuel - Blacksoil",
-      "price": 304.9,
-      "price_str": "304.9c/L",
-      "price_bowser": 313.9,
-      "fuel_type": "Diesel"
-    },
-    {
-      "name": "Pacific Fuel - Rocklea",
-      "price": 304.9,
-      "price_str": "304.9c/L",
-      "price_bowser": 313.9,
-      "fuel_type": "Diesel"
-    },
-    {
-      "name": "Pacific Fuel - Yatala",
       "price": 300.9,
       "price_str": "300.9c/L",
       "price_bowser": 309.9,
       "fuel_type": "Diesel"
     },
     {
+      "name": "Pacific Fuel - Rocklea",
+      "price": 299.9,
+      "price_str": "299.9c/L",
+      "price_bowser": 308.9,
+      "fuel_type": "Diesel"
+    },
+    {
+      "name": "Pacific Fuel - Yatala",
+      "price": 297.9,
+      "price_str": "297.9c/L",
+      "price_bowser": 306.9,
+      "fuel_type": "Diesel"
+    },
+    {
       "name": "Pacific Fuel - Hemmant",
-      "price": 304.9,
-      "price_str": "304.9c/L",
-      "price_bowser": 313.9,
+      "price": 300.9,
+      "price_str": "300.9c/L",
+      "price_bowser": 309.9,
       "fuel_type": "Diesel"
     },
     {
       "name": "United Petrol - Archerfield",
-      "price": 304.5,
-      "price_str": "304.5c/L",
-      "price_bowser": 308.5,
+      "price": 301.5,
+      "price_str": "301.5c/L",
+      "price_bowser": 305.5,
       "fuel_type": "Diesel"
     },
     {
       "name": "United Petrol - Brendale",
-      "price": 305.4,
-      "price_str": "305.4c/L",
-      "price_bowser": 309.4,
+      "price": 302.4,
+      "price_str": "302.4c/L",
+      "price_bowser": 306.4,
       "fuel_type": "Diesel"
     },
     {
       "name": "United Petrol - Loganlea",
-      "price": 305.4,
-      "price_str": "305.4c/L",
-      "price_bowser": 309.4,
+      "price": 302.4,
+      "price_str": "302.4c/L",
+      "price_bowser": 306.4,
       "fuel_type": "Diesel"
     },
     {
       "name": "United Petrol - Park Ridge",
-      "price": 305.4,
-      "price_str": "305.4c/L",
-      "price_bowser": 309.4,
+      "price": 302.4,
+      "price_str": "302.4c/L",
+      "price_bowser": 306.4,
       "fuel_type": "Diesel"
     }
   ]
