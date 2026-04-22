@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-04-22T12:00:25",
-  "last_updated_str": "Wednesday, 22 April 2026 at 12:00 PM",
+  "last_updated": "2026-04-22T16:00:29",
+  "last_updated_str": "Wednesday, 22 April 2026 at 04:00 PM",
   "is_mock": false,
   "stations": [
     {
@@ -33,9 +33,9 @@
     },
     {
       "name": "United Petrol - Archerfield",
-      "price": 271.5,
-      "price_str": "271.5c/L",
-      "price_bowser": 275.5,
+      "price": 269.4,
+      "price_str": "269.4c/L",
+      "price_bowser": 273.4,
       "fuel_type": "Diesel"
     },
     {
@@ -47,9 +47,9 @@
     },
     {
       "name": "United Petrol - Loganlea",
-      "price": 272.4,
-      "price_str": "272.4c/L",
-      "price_bowser": 276.4,
+      "price": 269.3,
+      "price_str": "269.3c/L",
+      "price_bowser": 273.3,
       "fuel_type": "Diesel"
     },
     {
