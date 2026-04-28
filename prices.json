@@ -1,13 +1,13 @@
 {
-  "last_updated": "2026-04-28T08:00:33",
-  "last_updated_str": "Tuesday, 28 April 2026 at 08:00 AM",
+  "last_updated": "2026-04-28T12:00:28",
+  "last_updated_str": "Tuesday, 28 April 2026 at 12:00 PM",
   "is_mock": false,
   "stations": [
     {
       "name": "Pacific Fuel - Blacksoil",
-      "price": 254.9,
-      "price_str": "254.9c/L",
-      "price_bowser": 263.9,
+      "price": 250.9,
+      "price_str": "250.9c/L",
+      "price_bowser": 259.9,
       "fuel_type": "Diesel"
     },
     {
