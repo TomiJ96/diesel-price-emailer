@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-04-28T12:00:28",
-  "last_updated_str": "Tuesday, 28 April 2026 at 12:00 PM",
+  "last_updated": "2026-04-28T16:00:30",
+  "last_updated_str": "Tuesday, 28 April 2026 at 04:00 PM",
   "is_mock": false,
   "stations": [
     {
@@ -33,30 +33,30 @@
     },
     {
       "name": "United Petrol - Archerfield",
-      "price": 245.5,
-      "price_str": "245.5c/L",
-      "price_bowser": 249.5,
+      "price": 243.5,
+      "price_str": "243.5c/L",
+      "price_bowser": 247.5,
       "fuel_type": "Diesel"
     },
     {
       "name": "United Petrol - Brendale",
-      "price": 245.9,
-      "price_str": "245.9c/L",
-      "price_bowser": 249.9,
+      "price": 244.9,
+      "price_str": "244.9c/L",
+      "price_bowser": 248.9,
       "fuel_type": "Diesel"
     },
     {
       "name": "United Petrol - Loganlea",
-      "price": 245.9,
-      "price_str": "245.9c/L",
-      "price_bowser": 249.9,
+      "price": 245.3,
+      "price_str": "245.3c/L",
+      "price_bowser": 249.3,
       "fuel_type": "Diesel"
     },
     {
       "name": "United Petrol - Park Ridge",
-      "price": 245.9,
-      "price_str": "245.9c/L",
-      "price_bowser": 249.9,
+      "price": 245.3,
+      "price_str": "245.3c/L",
+      "price_bowser": 249.3,
       "fuel_type": "Diesel"
     }
   ]
