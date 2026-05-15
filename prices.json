@@ -1,13 +1,13 @@
 {
-  "last_updated": "2026-05-15T08:00:26",
-  "last_updated_str": "Friday, 15 May 2026 at 08:00 AM",
+  "last_updated": "2026-05-15T12:00:26",
+  "last_updated_str": "Friday, 15 May 2026 at 12:00 PM",
   "is_mock": false,
   "stations": [
     {
       "name": "Pacific Fuel - Blacksoil",
-      "price": 225.9,
-      "price_str": "225.9c/L",
-      "price_bowser": 234.9,
+      "price": 220.9,
+      "price_str": "220.9c/L",
+      "price_bowser": 229.9,
       "fuel_type": "Diesel"
     },
     {
@@ -33,9 +33,9 @@
     },
     {
       "name": "United Petrol - Archerfield",
-      "price": 214.5,
-      "price_str": "214.5c/L",
-      "price_bowser": 218.5,
+      "price": 212.5,
+      "price_str": "212.5c/L",
+      "price_bowser": 216.5,
       "fuel_type": "Diesel"
     },
     {
